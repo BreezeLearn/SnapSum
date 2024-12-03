@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const summarizeBtn = document.getElementById("summarize-btn");
   const translateBtn = document.getElementById("translate-btn");
   const copyToClipboardBtn = document.getElementById("copy-btn");
+  const copyBtnText = document.getElementById("copy-btn-text");
   const downloadBtn = document.getElementById("download-btn");
 
   const screenshotImage = document.getElementById("content-image");
@@ -131,11 +132,13 @@ document.addEventListener("DOMContentLoaded", () => {
     navigator.clipboard
       .writeText(textContent)
       .then(() => {
-        alert("Summary copied to clipboard!");
+        copyBtnText.innerText = "Copied";
+        setTimeout(() => {
+          copyBtnText.innerText = "Copy";
+        }, 5000);
       })
       .catch((err) => {
         console.error("Failed to copy summary:", err);
-        alert("Failed to copy summary. Please try again.");
       });
   }
 
