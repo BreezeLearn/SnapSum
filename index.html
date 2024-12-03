@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SnapSum Extension</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div id="app">
+      <!-- Home Screen -->
+
+      <div id="home-screen" class="home-screen">
+        <div class="home-screen-cont">
+          <h1 class="home-screen-header">SnapSum</h1>
+          <p>Turn long reads of any webpage into short insights — instantly!</p>
+        </div>
+        <button id="summarize-btn" class="summerize-btn">
+          <img src="/assets/magicWandIcon-01.png" />
+
+          <span> Summarize </span>
+        </button>
+      </div>
+
+      <!-- Loading Screen -->
+      <div id="loading-screen" class="hidden loading-screen">
+        <div class="loading-screen-cont">
+          <h1>SnapSum</h1>
+          <p>Turn long reads of any webpage into short insights—instantly!</p>
+        </div>
+        <div class="loading-summerizer-spinner-cont">
+          <div class="spinner-container">
+            <div class="spinner"></div>
+          </div>
+          <p class="loading-screen-text">
+            Summarizing the page... This will only take a moment.
+          </p>
+        </div>
+      </div>
+
+      <!-- Summary Ready Screen -->
+      <div id="summary-screen" class="summary-screen hidden">
+        <div class="summary-screen-header-cont">
+          <div class="summary-screen-header-text">
+            <h1 class="">SnapSum</h1>
+            <div></div>
+          </div>
+
+          <div class="summary-screen-header-content">
+            <img src="/assets//check.png" />
+            <p>Your Summary is Ready!</p>
+            <button class="content-summarize-btn">
+              <img src="/assets/magicWandGrIcon.png" />
+
+              <span> Summarize </span>
+            </button>
+          </div>
+        </div>
+
+        <div class="summary-content-body">
+          <div class="summary-content-body-header">
+            <h2>Page Summary</h2>
+            <div class="summary-content-body-action">
+              <button id="translate-btn" class="button">
+                <span> Translate </span>
+                <img src="/assets/translateIcon.png" />
+              </button>
+              <button id="copy-btn" class="button">
+                <span> Copy </span>
+                <img src="/assets/shareIcon.png" />
+              </button>
+              <button id="download-btn" class="button">
+                <span> Download </span>
+                <img src="/assets/downLoadIcon.png" />
+              </button>
+            </div>
+          </div>
+
+          <div class="summary-body-content">
+            <img id="content-image" />
+            <p id="summary-text" class="summary-body-content-text"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

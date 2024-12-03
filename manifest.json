@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Snap Snum",
+  "version": "1.0",
+  "description": "A simple AI summerizer",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "identity",
+    "sidePanel",
+    "scripting",
+    "tabCapture"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "action": {
+    "default_icon": "assets/icon.png",
+    "default_title": "Open AI Chat"
+  },
+  "side_panel": {
+    "default_path": "index.html"
+  },
+
+  "host_permissions": ["<all_urls>"]
+}
