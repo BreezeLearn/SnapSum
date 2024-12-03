@@ -67,7 +67,7 @@ body {
 
 .loading-screen {
   width: 100%;
-  height: 840px;
+  height: 86vh;
   padding: 10px 20px;
   border-top: 2px solid #d9d9d91f;
   display: none;
