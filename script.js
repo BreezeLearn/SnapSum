@@ -26,8 +26,6 @@ document.addEventListener("DOMContentLoaded", () => {
       screenshotImage.alt = "Captured Screenshot";
       summary = cleanSummaryText(summary);
 
-      await progressPromise;
-
       summaryText.textContent = summary;
       loadingScreen.classList.add("hidden");
       summaryScreen.classList.remove("hidden");
