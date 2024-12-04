@@ -1,4 +1,3 @@
-```markdown
 # SnapSum - Web Page Summarizer & Fact-Checker
 
 SnapSum is a Google Chrome extension that allows users to generate offline summaries of web pages using Google’s AI Summarizer API. With SnapSum, users can easily:
@@ -118,5 +117,4 @@ If Summarization or Fact-Checking Fails:
 
 4. **Why do I need to enable so many Chrome flags?**
 
-   These flags enable experimental features and remove certain limitations required for the extension to function properly.
-```
+    These flags enable experimental features and remove certain limitations required for the extension to function properly.
