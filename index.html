@@ -63,20 +63,34 @@
             </button>
           </div>
         </div>
+        <div class="summary-content-body-tab">
+          <button
+            id="tab-summary-btn"
+            class="active-btn-class inactive-btn-class"
+          >
+            Summary
+          </button>
+          <button
+            id="tab-fact-check-btn"
+            class="active-btn-class inactive-btn-class"
+          >
+            Fact-Check
+          </button>
+        </div>
 
-        <div class="summary-content-body">
+        <div id="summary-content-tab" class="summary-content-body hidden">
           <div class="summary-content-body-header">
             <h2>Page Summary</h2>
             <div class="summary-content-body-action">
-              <button id="translate-btn" class="button">
+              <!-- <button id="translate-btn" class="button">
                 <span> Translate </span>
                 <img src="/assets/translateIcon.png" />
-              </button>
-              <button id="copy-btn" class="button">
-                <span id="copy-btn-text"> Copy </span>
+              </button> -->
+              <button id="summary-copy-btn" class="button">
+                <span id="summary-copy-btn-text"> Copy </span>
                 <img src="/assets/copyIcon.png" />
               </button>
-              <button id="download-btn" class="button">
+              <button id="summary-download-btn" class="button">
                 <span> Download </span>
                 <img src="/assets/downLoadIcon.png" />
               </button>
@@ -86,6 +100,33 @@
           <div class="summary-body-content">
             <img id="content-image" />
             <p id="summary-text" class="summary-body-content-text"></p>
+          </div>
+        </div>
+
+        <div id="fact-check-content-tab" class="summary-fact-check-body hidden">
+          <div class="summary-content-body-header">
+            <h2>Fact-Check</h2>
+            <div class="summary-content-body-action">
+              <button id="fact-copy-btn" class="button">
+                <span id="fact-copy-btn-text"> Copy </span>
+                <img src="/assets/copyIcon.png" />
+              </button>
+              <button id="fact-download-btn" class="button">
+                <span> Download </span>
+                <img src="/assets/downLoadIcon.png" />
+              </button>
+            </div>
+          </div>
+
+          <div
+            id="fact-spinner-container"
+            class="fact-spinner-container hidden"
+          >
+            <div class="fact-spinner"></div>
+          </div>
+
+          <div class="summary-body-content">
+            <p id="fact-check-text" class="summary-body-content-text"></p>
           </div>
         </div>
       </div>

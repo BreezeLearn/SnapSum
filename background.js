@@ -23,6 +23,31 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 });
 
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.action === "factCheckSummary") {
+    ai.languageModel
+      .create({
+        systemPrompt:
+          "You are a friendly, helpful assistant specialized in fact checking the users input text.",
+      })
+      .then((session) => {
+        return session.prompt(request.text);
+      })
+      .then((result) => {
+        sendResponse({
+          response:
+            result || "Sorry, I couldn't fact check the content effectively.",
+        });
+      })
+      .catch((error) => {
+        console.error("Error getting AI response:", error);
+        sendResponse({ response: "There was an error with the AI response." });
+      });
+
+    return true;
+  }
+});
+
 chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
   if (request.action === "getTranslationResponse") {
     const languagePair = {

@@ -2,21 +2,35 @@ document.addEventListener("DOMContentLoaded", () => {
   const homeScreen = document.getElementById("home-screen");
   const loadingScreen = document.getElementById("loading-screen");
   const summaryScreen = document.getElementById("summary-screen");
+  const summaryContentTab = document.getElementById("summary-content-tab");
+  const factCheckContentTab = document.getElementById("fact-check-content-tab");
+  const factSpinnerContainer = document.getElementById(
+    "fact-spinner-container"
+  );
 
   const summarizeBtn = document.getElementById("summarize-btn");
-  const translateBtn = document.getElementById("translate-btn");
-  const copyToClipboardBtn = document.getElementById("copy-btn");
-  const copyBtnText = document.getElementById("copy-btn-text");
-  const downloadBtn = document.getElementById("download-btn");
+  // const translateBtn = document.getElementById("translate-btn");
+  const summaryContentTabBtn = document.getElementById("tab-summary-btn");
+  const factCheckTabBtn = document.getElementById("tab-fact-check-btn");
+  const factCheckBtn = document.getElementById("fact-check-btn");
+  const summaryCopyToClipboardBtn = document.getElementById("summary-copy-btn");
+  const factCopyToClipboardBtn = document.getElementById("fact-copy-btn");
+  const summaryCopyBtnText = document.getElementById("summary-copy-btn-text");
+  const factCopyBtnText = document.getElementById("fact-copy-btn-text");
+  const summaryDownloadBtn = document.getElementById("summary-download-btn");
+  const factDownloadBtn = document.getElementById("fact-download-btn");
 
   const screenshotImage = document.getElementById("content-image");
 
   const summaryText = document.getElementById("summary-text");
+  const factCheckText = document.getElementById("fact-check-text");
 
   summarizeBtn.addEventListener("click", async () => {
     try {
       homeScreen.classList.add("hidden");
       loadingScreen.classList.remove("hidden");
+
+      summaryTabToggleFuntion();
 
       const pageContent = await getPageContent();
       const pageImage = await captureScreenshot();
@@ -35,21 +49,58 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  translateBtn.addEventListener("click", async () => {
-    try {
-      const pageContent = summaryText.innerText;
-      const translatedText = await translateResponse(pageContent);
+  // translateBtn.addEventListener("click", async () => {
+  //   try {
+  //     const pageContent = summaryText.innerText;
+  //     const translatedText = await translateResponse(pageContent);
 
-      summaryText.textContent = translatedText;
-      loadingScreen.classList.add("hidden");
-      summaryScreen.classList.remove("hidden");
-    } catch (error) {
-      console.error("Error during translation:", error);
-    }
+  //     summaryText.textContent = translatedText;
+  //     loadingScreen.classList.add("hidden");
+  //     summaryScreen.classList.remove("hidden");
+  //   } catch (error) {
+  //     console.error("Error during translation:", error);
+  //   }
+  // });
+
+  summaryCopyToClipboardBtn.addEventListener("click", () =>
+    copySummaryToClipboard(summaryText, summaryCopyBtnText)
+  );
+  factCopyToClipboardBtn.addEventListener("click", () =>
+    copySummaryToClipboard(factCheckText, factCopyBtnText)
+  );
+  summaryDownloadBtn.addEventListener("click", () =>
+    downloadSummary(summaryText, "summary")
+  );
+  factDownloadBtn.addEventListener("click", () =>
+    downloadSummary(factCheckText, "fact-check")
+  );
+
+  summaryContentTabBtn.addEventListener("click", summaryTabToggleFuntion);
+
+  factCheckTabBtn.addEventListener("click", async () => {
+    factCheckContentTab.classList.remove("hidden");
+    summaryContentTab.classList.add("hidden");
+
+    factCheckTabBtn.classList.add("active-btn-class");
+    factCheckTabBtn.classList.remove("inactive-btn-class");
+    summaryContentTabBtn.classList.remove("active-btn-class");
+    summaryContentTabBtn.classList.add("inactive-btn-class");
+
+    factSpinnerContainer.classList.remove("hidden");
+    const factCheckedResponse = await factCheckResponse(summaryText.innerText);
+    factSpinnerContainer.classList.add("hidden");
+    factCheckText.innerText = cleanSummaryText(factCheckedResponse);
   });
 
-  copyToClipboardBtn.addEventListener("click", copySummaryToClipboard);
-  downloadBtn.addEventListener("click", downloadSummary);
+  function summaryTabToggleFuntion() {
+    summaryContentTab.classList.remove("hidden");
+    factCheckContentTab.classList.add("hidden");
+
+    summaryContentTabBtn.classList.add("active-btn-class");
+    summaryContentTabBtn.classList.remove("inactive-btn-class");
+    factCheckTabBtn.classList.remove("active-btn-class");
+    factCheckTabBtn.classList.add("inactive-btn-class");
+  }
 
   async function getPageContent() {
     return new Promise((resolve, reject) => {
@@ -106,10 +157,25 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  async function translateResponse(content) {
+  // async function translateResponse(content) {
+  //   return new Promise((resolve, reject) => {
+  //     chrome.runtime.sendMessage(
+  //       { action: "getTranslationResponse", text: content },
+  //       (response) => {
+  //         if (response && response.response) {
+  //           resolve(response.response);
+  //         } else {
+  //           reject("Unable to translate text.");
+  //         }
+  //       }
+  //     );
+  //   });
+  // }
+
+  async function factCheckResponse(content) {
     return new Promise((resolve, reject) => {
       chrome.runtime.sendMessage(
-        { action: "getTranslationResponse", text: content },
+        { action: "factCheckSummary", text: content },
         (response) => {
           if (response && response.response) {
             resolve(response.response);
@@ -121,20 +187,20 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function copySummaryToClipboard() {
-    if (!summaryText) {
+  function copySummaryToClipboard(contentToCopy, tag) {
+    if (!contentToCopy) {
       console.error("Summary text element not found!");
       return;
     }
 
-    const textContent = summaryText.innerText;
+    const textContent = contentToCopy.innerText;
 
     navigator.clipboard
       .writeText(textContent)
       .then(() => {
-        copyBtnText.innerText = "Copied";
+        tag.innerText = "Copied";
         setTimeout(() => {
-          copyBtnText.innerText = "Copy";
+          tag.innerText = "Copy";
         }, 5000);
       })
       .catch((err) => {
@@ -142,19 +208,19 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   }
 
-  function downloadSummary() {
-    if (!summaryText) {
+  function downloadSummary(contentToDownload, fileName) {
+    if (!contentToDownload) {
       console.error("Summary text element not found!");
       return;
     }
 
-    const textContent = summaryText.innerText;
+    const textContent = contentToDownload.innerText;
 
     const blob = new Blob([textContent], { type: "text/plain" });
 
     const downloadLink = document.createElement("a");
     downloadLink.href = URL.createObjectURL(blob);
-    downloadLink.download = "summary.txt";
+    downloadLink.download = `${fileName}.txt`;
 
     document.body.appendChild(downloadLink);
     downloadLink.click();
