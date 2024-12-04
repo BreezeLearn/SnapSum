@@ -12,7 +12,10 @@ SnapSum is a Google Chrome extension that allows users to generate offline summa
 3. **Export Options**: Copy the summary to your clipboard or download it as a text file.
 4. **Offline Functionality**: Works entirely offline using on-device AI models, ensuring fast and private processing.
 
-## Supported Platforms
+## API USED 
+
+1. **Summarization**: Summaruze API 
+2. **Fact-Checker**: Write API
 
 This extension requires:
 - **Browser**: Google Chrome Canary.
