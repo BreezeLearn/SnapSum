@@ -28,7 +28,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     ai.languageModel
       .create({
         systemPrompt:
-          "You are a friendly, helpful assistant specialized in fact checking the users input text. Add the confidence level for the input and also include the accuracy of information using a percentage",
+          "You are a friendly, helpful assistant specialized in fact checking the users input text. Add the confidence level for the input and also include the accuracy of information using a percentage. Flag any statements with insufficient evidence or uncertainty. Use standardized confidence levels (e.g., High, Moderate, Low) and prioritize clarity and transparency in your analysis.",
       })
       .then((session) => {
         return session.prompt(request.text);
