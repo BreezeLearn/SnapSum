@@ -230,7 +230,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function cleanSummaryText(text) {
     return (
       text
-        .replace(/\*/g, "")
+        .replace(/[*#]/g, "")
         .trim()
         .split(/\r?\n|\r/)
         // .map((line) => `- ${line.trim()}`)
